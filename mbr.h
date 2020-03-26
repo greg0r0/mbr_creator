@@ -3,27 +3,30 @@
 
 #define MBR_SIGNATURE 0xaa55
 #define BOOTABLE_MBR 0x80
+#define SECTOR_SIZE 512
+
+
 
 struct chs {
-    int cylinder;
-    int head;
-    int sector;
-};
+    unsigned char cylinder;
+    unsigned char head;
+    unsigned char sector;
+} __attribute__((packed));
 
 struct mbr{
     char code[440];
-    int signature;
-    int vvoid;
+    unsigned int signature;
+    short int vvoid;
     struct mbr_patrition {
-        int status;
+        unsigned char status;
         struct chs first_sector;
-        int partition_type;
+        unsigned char partition_type;
         struct chs end_sector;
 
         unsigned int first_sector_lba;
         unsigned int sectors;
     } partition[4];
-    int mbr_signature;
-}
+    unsigned short int mbr_signature;
+} __attribute__((packed));
 
 #endif 
